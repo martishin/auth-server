@@ -4,6 +4,7 @@ import (
 	"log/slog"
 	"os"
 
+	"github.com/tty-monkey/auth-server/internal/app"
 	"github.com/tty-monkey/auth-server/internal/config"
 	"github.com/tty-monkey/auth-server/internal/lib/logger/handlers/slogpretty"
 )
@@ -20,6 +21,10 @@ func main() {
 	logger := setupLogger(cfg.Env)
 
 	logger.Info("starting application", slog.Any("config", cfg))
+
+	application := app.New(logger, cfg.GRPC.Port, cfg.PostgresConnection, cfg.TokenTTL)
+
+	application.GRPCserver.MustRun()
 }
 
 func setupLogger(env string) *slog.Logger {
