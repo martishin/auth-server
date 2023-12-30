@@ -1,0 +1,6 @@
+env: "local"
+postgres_connection: "host=localhost port=5432 user=postgres password=postgres dbname=auth sslmode=disable timezone=UTC connect_timeout=5"
+token_ttl: 1h
+grpc:
+    port: 8080
+    timeout: 10h # 5s
