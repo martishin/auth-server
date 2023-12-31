@@ -3,6 +3,8 @@ package main
 import (
 	"log/slog"
 	"os"
+	"os/signal"
+	"syscall"
 
 	"github.com/tty-monkey/auth-server/internal/app"
 	"github.com/tty-monkey/auth-server/internal/config"
@@ -24,7 +26,18 @@ func main() {
 
 	application := app.New(logger, cfg.GRPC.Port, cfg.PostgresConnection, cfg.TokenTTL)
 
-	application.GRPCserver.MustRun()
+	go application.GRPCserver.MustRun()
+
+	stop := make(chan os.Signal, 1)
+	signal.Notify(stop, syscall.SIGTERM, syscall.SIGINT)
+
+	sig := <-stop
+
+	logger.Info("received signal", slog.String("signal", sig.String()))
+
+	application.GRPCserver.Stop()
+
+	logger.Info("application stopped")
 }
 
 func setupLogger(env string) *slog.Logger {
