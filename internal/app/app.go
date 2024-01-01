@@ -5,6 +5,7 @@ import (
 	"time"
 
 	grpcapp "github.com/tty-monkey/auth-server/internal/app/grpc"
+	"github.com/tty-monkey/auth-server/internal/services/auth"
 )
 
 type App struct {
@@ -16,10 +17,10 @@ func New(
 	grpcPort int,
 	// storagePath string,
 	_ string,
-	// tokenTTL time.Duration,
-	_ time.Duration,
+	tokenTTL time.Duration,
 ) *App {
-	grpcApp := grpcapp.New(log, grpcPort)
+	grpcAuth := auth.New(log, nil, nil, nil, tokenTTL)
+	grpcApp := grpcapp.New(log, grpcAuth, grpcPort)
 
 	return &App{
 		GRPCserver: grpcApp,

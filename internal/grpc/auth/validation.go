@@ -50,6 +50,7 @@ func validateIsAdmin(_ *validator.Validate, req *ssov1.IsAdminRequest) error {
 
 func validateEmail(validate *validator.Validate, email string) error {
 	if err := validate.Var(email, "required,email"); err != nil {
+		//nolint:errorlint // to not bloat the logic
 		for _, validationErr := range err.(validator.ValidationErrors) {
 			switch validationErr.Tag() {
 			case "required":
