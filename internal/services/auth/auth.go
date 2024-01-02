@@ -29,12 +29,12 @@ type UserSaver interface {
 }
 
 type UserProvider interface {
-	GetUser(ctx context.Context, email string) (models.User, error)
+	User(ctx context.Context, email string) (models.User, error)
 	IsAdmin(ctx context.Context, userID int64) (bool, error)
 }
 
 type AppProvider interface {
-	GetApp(ctx context.Context, appID int) (models.App, error)
+	App(ctx context.Context, appID int) (models.App, error)
 }
 
 var (
@@ -78,7 +78,7 @@ func (a *Auth) Login(
 
 	log.Info("attempting to login user")
 
-	user, err := a.userProvider.GetUser(ctx, email)
+	user, err := a.userProvider.User(ctx, email)
 	if err != nil {
 		if errors.Is(err, storage.ErrUserNotFound) {
 			log.Error("failed to get user", sl.Err(err))
@@ -97,7 +97,7 @@ func (a *Auth) Login(
 		return "", fmt.Errorf("%s: %w", op, errInvalidCredentials)
 	}
 
-	app, err := a.appProvider.GetApp(ctx, appID)
+	app, err := a.appProvider.App(ctx, appID)
 	if err != nil {
 		return "", fmt.Errorf("%s: %w", op, err)
 	}
