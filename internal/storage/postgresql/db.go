@@ -14,7 +14,7 @@ import (
 )
 
 type Storage struct {
-	db *pgxpool.Pool
+	DB *pgxpool.Pool
 }
 
 // New creates new instance of the PostgreSQL Storage.
@@ -26,7 +26,7 @@ func New(storageConnection string) (*Storage, error) {
 		return nil, fmt.Errorf("%s: %w", op, err)
 	}
 
-	return &Storage{db: pool}, nil
+	return &Storage{DB: pool}, nil
 }
 
 func (s *Storage) SaveUser(ctx context.Context, email string, passwordHash []byte) (int64, error) {
@@ -39,7 +39,7 @@ func (s *Storage) SaveUser(ctx context.Context, email string, passwordHash []byt
 	`
 
 	var userID int64
-	err := s.db.QueryRow(ctx, stmt, email, passwordHash).Scan(&userID)
+	err := s.DB.QueryRow(ctx, stmt, email, passwordHash).Scan(&userID)
 
 	if err != nil {
 		var pgErr *pgconn.PgError
@@ -63,7 +63,7 @@ func (s *Storage) User(ctx context.Context, email string) (models.User, error) {
 	`
 
 	var user models.User
-	err := s.db.QueryRow(ctx, query, email).Scan(&user.ID, &user.Email, &user.PasswordHash)
+	err := s.DB.QueryRow(ctx, query, email).Scan(&user.ID, &user.Email, &user.PasswordHash)
 
 	if err != nil {
 		if errors.Is(err, pgx.ErrNoRows) {
@@ -86,7 +86,7 @@ func (s *Storage) IsAdmin(ctx context.Context, userID int64) (bool, error) {
 	`
 
 	var isAdmin bool
-	err := s.db.QueryRow(ctx, query, userID).Scan(&isAdmin)
+	err := s.DB.QueryRow(ctx, query, userID).Scan(&isAdmin)
 
 	if err != nil {
 		if errors.Is(err, pgx.ErrNoRows) {
@@ -109,7 +109,7 @@ func (s *Storage) App(ctx context.Context, appID int) (models.App, error) {
 	`
 
 	var app models.App
-	err := s.db.QueryRow(ctx, query, appID).Scan(&app.ID, &app.Name, &app.Secret)
+	err := s.DB.QueryRow(ctx, query, appID).Scan(&app.ID, &app.Name, &app.Secret)
 
 	if err != nil {
 		if errors.Is(err, pgx.ErrNoRows) {

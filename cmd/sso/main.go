@@ -28,6 +28,10 @@ func main() {
 
 	go application.GRPCserver.MustRun()
 
+	defer func() {
+		logger.Info("closing database connection")
+		application.Storage.DB.Close()
+	}()
 	stop := make(chan os.Signal, 1)
 	signal.Notify(stop, syscall.SIGTERM, syscall.SIGINT)
 

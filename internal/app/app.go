@@ -11,6 +11,7 @@ import (
 
 type App struct {
 	GRPCserver *grpcapp.App
+	Storage    *postgresql.Storage
 }
 
 func New(
@@ -29,5 +30,6 @@ func New(
 
 	return &App{
 		GRPCserver: grpcApp,
+		Storage:    storage,
 	}
 }
