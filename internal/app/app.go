@@ -15,7 +15,7 @@ type App struct {
 func New(
 	log *slog.Logger,
 	grpcPort int,
-	// storagePath string,
+	// storageConnection string,
 	_ string,
 	tokenTTL time.Duration,
 ) *App {
