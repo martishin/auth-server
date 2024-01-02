@@ -15,7 +15,7 @@ type App struct {
 
 func New(
 	log *slog.Logger,
-	grpcPort int,
+	port int,
 	storageConnection string,
 	tokenTTL time.Duration,
 ) *App {
@@ -23,8 +23,9 @@ func New(
 	if err != nil {
 		panic(err)
 	}
-	grpcAuth := auth.New(log, storage, storage, storage, tokenTTL)
-	grpcApp := grpcapp.New(log, grpcAuth, grpcPort)
+	authService := auth.New(log, storage, storage, storage, tokenTTL)
+
+	grpcApp := grpcapp.New(log, authService, port)
 
 	return &App{
 		GRPCserver: grpcApp,
