@@ -1,5 +1,5 @@
 env: "local"
-postgres_connection: "postgres://postgres:postgres@localhost:5432/auth?sslmode=disable&timezone=UTC&connect_timeout=5"
+pg_conn: "postgres://postgres:postgres@localhost:5432/auth?sslmode=disable&timezone=UTC"
 token_ttl: 1h
 grpc:
     port: 8080

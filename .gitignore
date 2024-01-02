@@ -31,3 +31,7 @@ out/
 
 # Go workspace file
 go.work
+
+# Custom files
+schema_dump.sql
+.env

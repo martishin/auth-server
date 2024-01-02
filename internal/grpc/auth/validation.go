@@ -17,7 +17,7 @@ func validateLogin(validate *validator.Validate, req *ssov1.LoginRequest) error 
 		return err
 	}
 
-	if err := validatePassword(validate, req.GetEmail()); err != nil {
+	if err := validatePassword(validate, req.GetPassword()); err != nil {
 		return err
 	}
 
@@ -33,7 +33,7 @@ func validateRegister(validate *validator.Validate, req *ssov1.RegisterRequest) 
 		return err
 	}
 
-	if err := validatePassword(validate, req.GetEmail()); err != nil {
+	if err := validatePassword(validate, req.GetPassword()); err != nil {
 		return err
 	}
 
@@ -67,7 +67,7 @@ func validateEmail(validate *validator.Validate, email string) error {
 }
 
 func validatePassword(validate *validator.Validate, password string) error {
-	if err := validate.Var(password, "required"); err != nil {
+	if err := validate.Var(password, "required,min=8"); err != nil {
 		return status.Error(codes.InvalidArgument, "password is required")
 	}
 

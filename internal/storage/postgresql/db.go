@@ -31,6 +31,9 @@ func New(storageConnection string) (*Storage, error) {
 
 func (s *Storage) SaveUser(ctx context.Context, email string, passwordHash []byte) (int64, error) {
 	const op = "storage.postgresql.SaveUser"
+	// new ctx with timeout can be created
+	// ctx, cancel := context.WithTimeout(ctx, dbTimeout)
+	// defer cancel()
 
 	stmt := `
 		INSERT INTO users (email, pass_hash)
