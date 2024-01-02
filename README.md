@@ -26,7 +26,7 @@ cc, err := grpc.DialContext(context.Background(),
 ```go
 authClient := ssov1.NewAuthClient(cc)
 ```
-* Make requests using this client:
+* Make requests using the client:
 ```go
 resp, err := authClient.Register(ctx, &ssov1.RegisterRequest{
   Email:    email,
