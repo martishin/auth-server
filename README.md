@@ -12,6 +12,9 @@ Authentication/Authorization microservice written in Go, provides gRPC endpoints
 `go run cmd/sso/main.go --config=./configs/local.yaml`
 * API will be available at http://localhost:8080/
 
+## Testing
+* Run tests: `make test`
+
 ## How to Connect From Another Service  
 * Fetch schemas from the [auth-server-schemas](https://github.com/tty-monkey/auth-server-schemas) repo:  
   `go get github.com/tty-monkey/auth-server-schemas`
