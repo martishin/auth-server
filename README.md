@@ -1,5 +1,5 @@
 # Auth Server
-Authentication/Authorization microservice written in Go, provides gRPC endpoints for managing JWT tokens and user's data.  
+Authentication/Authorization microservice written in Go, provides gRPC endpoints for managing JWT tokens and user's data.
 
 ## Running Locally
 * To run the server and PostgreSQL locally you can execute:   
