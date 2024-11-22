@@ -42,7 +42,7 @@ resp, err := authClient.Register(ctx, &ssov1.RegisterRequest{
 gRPC protobuf schemas can be found [here](https://github.com/tty-monkey/auth-server-schemas).
 You can import the schema file into [Postman](https://blog.postman.com/postman-now-supports-grpc/) and send requests from it.
 
-### Auth / Register
+### Register
 Registers a new user.
 
 - **Request: `RegisterRequest`**
@@ -52,7 +52,7 @@ Registers a new user.
 - **Response: `RegisterResponse`**
   - `user_id` (int64): Unique identifier of the registered user.
 
-### Auth / Login
+### Login
 Authenticates a user and provides a token.
 
 - **Request: `LoginRequest`**
@@ -63,7 +63,7 @@ Authenticates a user and provides a token.
 - **Response: `LoginResponse`**
   - `token` (string): Authentication token for the user.
 
-### Auth / IsAdmin
+### IsAdmin
 Checks if the user is an admin.
 
 - **Request**: `IsAdminRequest`
